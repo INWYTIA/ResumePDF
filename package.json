@@ -1,0 +1,32 @@
+{
+  "name": "resumepdf",
+  "version": "1.0.0",
+  "description": "generates a pdf resume from github profile name",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/INWYTIA/ResumePDF.git"
+  },
+  "keywords": [
+    "resume",
+    "pdf",
+    "bootcamp",
+    "homework",
+    "node",
+    "javascript"
+  ],
+  "author": "Evan LaFollette",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/INWYTIA/ResumePDF/issues"
+  },
+  "homepage": "https://github.com/INWYTIA/ResumePDF#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "electron-html-to": "^2.6.0",
+    "inquirer": "^7.0.4"
+  }
+}
