@@ -1,11 +1,11 @@
 const inquirer = require("inquirer");
 const fs = require('fs');
-const convertFactory = require("electron-html-to");
+const util = require("util");
 const generateHTML = require('./generateHTML.js');
 const axios = require('axios');
-// const conversion = convertFactory({
-//   converterPath: convertFactory.converters.PDF
-// });
+const pdf = require('html-pdf');
+
+const readFileAsync = util.promisify(fs.readFile);
 
 const userData = {
   name: '',
@@ -73,10 +73,13 @@ function starData (url) {
 };
 
 function writeToFile(fileName, data) {
-  fs.writeFile(fileName, data, err => {
+  return new Promise(function (resolve) {
+    fs.writeFile(fileName, data, err => {
     if (err) {
       return console.log(err);
     };
+    resolve(fileName)
+  });
   });
 };
 
@@ -87,22 +90,23 @@ function init() {
 init().then(function (ans) {
   userData.color = ans.color;
   const queryUserUrl = `https://api.github.com/users/${ans.username}`;
+  const filePath = `${ans.username}.html`;
   buildData(queryUserUrl).then(function (data) {
-    console.log(data);
     const html = generateHTML.generateHTML(data);
-    writeToFile(`${ans.username}.html`,html);
+    writeToFile(filePath,html).then(function (path) {
+      console.log(path);
+      readFileAsync(path, 'utf8').then(function (data) {
+        console.log(data);
+        pdf.create(data).toFile(`${userData.name}.pdf`, function(err, res) {
+          if (err) return console.log(err);
+          console.log(res);
+        });
+      }).catch(function(err) {
+        console.log(err);
+      });
+    });
   }).catch(function(err) {
     console.log(err);
   });
 });
-  // fs.readFile(`${userData.login}.html`, function (err, data) {
-  //   if (err) {
-  //     return console.log(err);
-  //   };
-  //   conversion({ html: data }, (err, result) => {
-  //     if (err) {
-  //       return console.error(err);
-  //     };
-  //     result.stream.pipe(fs.createWriteStream(`${userData.login}.pdf`));
-  //   });
-  // });
+  

@@ -3,7 +3,7 @@ const colors = {
     wrapperBackground: "#E6E1C3",
     headerBackground: "#C1C72C",
     headerColor: "black",
-    photoBorderColor: "#black"
+    photoBorderColor: "black"
   },
   blue: {
     wrapperBackground: "#5F64D3",
@@ -92,7 +92,6 @@ function generateHTML(data) {
          margin: 0 auto;
          margin-bottom: -50px;
          display: flex;
-         justify-content: center;
          flex-wrap: wrap;
          background-color: ${colors[data.color].headerBackground};
          color: ${colors[data.color].headerColor};
@@ -109,7 +108,7 @@ function generateHTML(data) {
          border: 6px solid ${colors[data.color].photoBorderColor};
          box-shadow: rgba(0, 0, 0, 0.3) 4px 1px 20px 4px;
          }
-         .photo-header h1, .photo-header h2 {
+         .photo-header h1, .photo-header h2, .photo-header h6 {
          width: 100%;
          text-align: center;
          }
@@ -170,7 +169,77 @@ function generateHTML(data) {
             zoom: .75; 
           } 
          }
-      </style>`
+      </style>
+      </head>
+      <body>
+        <div class="wrapper">
+          <div class="photo-header">
+            <img src="${data.img}">
+            <h1>
+              Hi!
+            </h1>
+            <h2>
+              My name is ${data.name}.
+            </h2>
+            <h6>
+              Currently in ${data.location}.
+            </h6>
+            <div class="links-nav">
+              <a class="nav-link" href="${data.link}">
+                Github
+              </a>
+            </div>
+          </div>
+          <main>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <h3>
+                    Here's what I've been up to on Github.
+                  </h3>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col card">
+                  <h3>
+                    Public Repositories
+                  </h3>
+                  <h4>
+                    ${data.repos}
+                  </h4>
+                </div>
+                <div class="col card">
+                  <h3>
+                    Followers
+                  </h3>
+                  <h4>
+                    ${data.followers}
+                  </h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col card">
+                  <h3>
+                    GitHub Stars
+                  </h3>
+                  <h4>
+                    ${data.stars}
+                  </h4>
+                </div>
+                <div class="col card">
+                  <h3>
+                    Following
+                  </h3>
+                  <h4>
+                    ${data.following}
+                  </h4>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </body>
+  </html>`
         }
 
 module.exports = {
